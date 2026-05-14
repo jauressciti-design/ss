@@ -18,11 +18,16 @@ function encrypt(text) {
   return iv.toString('hex') + ':' + encrypted.toString('hex');
 }
 
+function generateOTP() {
+  return crypto.randomInt(100000, 999999).toString();
+}
+
 router.post("/register", async (req, res) => {
   try {
     const { phone, name } = req.body;
     if (!phone || !name) return res.status(400).json({ error: "phone et name requis" });
 
+    const otpCode = generateOTP();
     let user = await prisma.user.findUnique({ where: { phone } });
 
     if (!user) {
@@ -34,17 +39,17 @@ router.post("/register", async (req, res) => {
           name,
           walletAddress: walletInfo.address,
           walletPrivateKey: encryptedPk,
-          otpCode: "123456"
+          otpCode
         }
       });
     } else {
       user = await prisma.user.update({
         where: { id: user.id },
-        data: { otpCode: "123456" }
+        data: { otpCode }
       });
     }
 
-    await twilioService.sendOTP(user.phone, user.otpCode);
+    await twilioService.sendOTP(user.phone, otpCode);
     res.json({ message: "OTP envoyé", phone: user.phone });
   } catch (error) {
     console.error(error);

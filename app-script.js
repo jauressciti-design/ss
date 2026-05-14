@@ -3,10 +3,14 @@
    Backend API integration with realistic mock fallbacks
    ============================================================ */
 
-// Pour deployment Vercel: utiliser 'https://diasporaconnect-api.vercel.app'
-// Pour local: utiliser 'http://localhost:3000'
-// Laissez vide '' pour utiliser les mocks integres
-const API_BASE = 'http://localhost:3000'; // Backend API URL
+// Auto-detect API base URL:
+// - In production, set window.DIASPORA_API_URL or use environment-specific URL
+// - Falls back to localhost for development, or '' for pure mock mode
+const API_BASE = window.DIASPORA_API_URL || (
+  location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+    ? 'http://localhost:3000'
+    : '' // Mock mode for static hosting without backend
+);
 
 // ===================== EXCHANGE RATES =====================
 const defaultRates = { USD: 592, EUR: 655.957, GBP: 746, CAD: 435 };

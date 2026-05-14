@@ -175,6 +175,37 @@ DiasporaConnect contribue aux :
 - **ODD 8** - Travail décent : Faciliter les investissements diaspora
 - **ODD 10** - Inégalités réduites : Frais 0.8% vs 3% objectif 2030
 
+## 🚀 Déploiement
+
+### Frontend (Vercel)
+
+1. Connectez-vous à [vercel.com](https://vercel.com) avec GitHub
+2. Importez le repo `MIABE-HACK-2026`
+3. Le fichier `vercel.json` est déjà configuré
+4. Déployez !
+
+### Backend (Render)
+
+1. Connectez-vous à [render.com](https://render.com) avec GitHub
+2. Cliquez **New** > **Blueprint** et sélectionnez le repo
+3. Le fichier `render.yaml` configurera automatiquement :
+   - Un serveur web Node.js (backend)
+   - Une base de données PostgreSQL
+4. Ajoutez les variables d'environnement manquantes si nécessaire (voir `backend/.env.example`)
+
+### Base de données PostgreSQL
+
+La base de données est configurée automatiquement via Render Blueprint. Pour une configuration manuelle :
+
+```bash
+cd backend
+cp .env.example .env
+# Editez .env avec votre DATABASE_URL PostgreSQL
+npm install
+npx prisma db push
+npm start
+```
+
 ## 👥 Équipe
 
 Projet développé pour le **MIABE Hackathon 2026** - Béninin.
@@ -185,7 +216,6 @@ MIT License
 
 ## 🔗 Liens
 
-- **Prototype**: https://diaspora-connect-ayaxntwu.devinapps.com/
 - **Documentation API**: Voir `API_FRONTEND_DOCS.md`
 - **Doc Technique Blockchain**: Voir `DiasporaConnect_Technique_Blockchain.docx`
 

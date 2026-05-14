@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.local
+*.log
+*.db
+*.pid
+backend/alice.json
+backend/alice_token.txt
+backend/alice_wallet.txt
+backend/bob_token.txt
+backend/bob_wallet.txt
+backend/transfer_id.txt
+backend/transfer_res.json
+backend/transfer_response.json
+backend/backend.log
+backend/contract-addresses.json

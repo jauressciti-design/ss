@@ -1,26 +1,18 @@
 // DiasporaConnect Service Worker
-const CACHE_NAME = 'diaspora-v1';
-const STATIC_CACHE = 'diaspora-static-v1';
-const DYNAMIC_CACHE = 'diaspora-dynamic-v1';
+const CACHE_NAME = 'diaspora-v2';
+const STATIC_CACHE = 'diaspora-static-v2';
+const DYNAMIC_CACHE = 'diaspora-dynamic-v2';
 
 // Fichiers statiques à mettre en cache
 const STATIC_FILES = [
-  '/',
-  '/index.html',
-  '/app.html',
-  '/app-styles.css',
-  '/app-script.js',
-  '/manifest.json',
-  '/auth.js',
-  '/blockchain.js',
-  '/coingecko.js',
-  '/rates.js',
-  '/transactions.js',
-  '/transfer.js',
-  '/withdraw.js',
-  '/assets/favicon.svg',
-  '/assets/icon-192.png',
-  '/assets/icon-512.png'
+  './',
+  './index.html',
+  './app-styles.css',
+  './app-script.js',
+  './manifest.json',
+  './assets/favicon.svg',
+  './assets/icon-192.png',
+  './assets/icon-512.png'
 ];
 
 // Installation du Service Worker
@@ -79,7 +71,7 @@ async function cacheFirst(request) {
     }
     return networkResponse;
   } catch (error) {
-    return caches.match('/index.html');
+    return caches.match('./index.html');
   }
 }
 

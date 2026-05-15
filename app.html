@@ -762,19 +762,64 @@
   window.DIASPORA_API_URL = 'https://user:d10b00d279fa413f36617173530f37dd@0c643afbf900-tunnel-yamugwtu.devinapps.com';
 </script>
 <script src="app-script.js"></script>
-  <script>
-    // Enregistrement du Service Worker PWA
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then((registration) => {
-            console.log('[PWA] Service Worker enregistré:', registration.scope);
-          })
-          .catch((error) => {
-            console.log('[PWA] Erreur:', error);
-          });
+
+<!-- PWA Install Banner -->
+<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#F97316,#EA580C);color:#fff;padding:16px 20px;font-family:'Inter',sans-serif;box-shadow:0 -4px 20px rgba(0,0,0,.3);animation:slideUpBanner .4s ease both;">
+  <div style="display:flex;align-items:center;gap:14px;max-width:500px;margin:0 auto;">
+    <img src="assets/icon-192.png" alt="DiasporaConnect" style="width:48px;height:48px;border-radius:12px;"/>
+    <div style="flex:1;">
+      <strong style="font-size:.95rem;">Installer DiasporaConnect</strong>
+      <p style="font-size:.78rem;opacity:.9;margin:2px 0 0;">Accedez rapidement depuis votre ecran d'accueil</p>
+    </div>
+    <button onclick="installPWA()" style="background:#fff;color:#EA580C;font-weight:700;padding:10px 18px;border-radius:10px;font-size:.85rem;border:none;cursor:pointer;white-space:nowrap;">Installer</button>
+    <button onclick="dismissInstall()" style="background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;padding:4px;opacity:.7;">&times;</button>
+  </div>
+</div>
+<style>@keyframes slideUpBanner{from{transform:translateY(100%)}to{transform:translateY(0)}}</style>
+
+<script>
+  // PWA Install Prompt
+  let deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installBanner').style.display = 'block';
+  });
+
+  window.installPWA = function() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((result) => {
+        if (result.outcome === 'accepted') {
+          console.log('[PWA] Installation acceptee');
+        }
+        deferredPrompt = null;
+        document.getElementById('installBanner').style.display = 'none';
       });
     }
-  </script>
+  };
+
+  window.dismissInstall = function() {
+    document.getElementById('installBanner').style.display = 'none';
+  };
+
+  window.addEventListener('appinstalled', () => {
+    console.log('[PWA] App installee !');
+    document.getElementById('installBanner').style.display = 'none';
+  });
+
+  // Enregistrement du Service Worker PWA
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then((registration) => {
+          console.log('[PWA] Service Worker enregistre:', registration.scope);
+        })
+        .catch((error) => {
+          console.log('[PWA] Erreur SW:', error);
+        });
+    });
+  }
+</script>
 </body>
 </html>

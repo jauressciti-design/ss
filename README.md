@@ -4,31 +4,146 @@
   <img src="https://img.shields.io/badge/MIABE-Hackathon%202026-orange" alt="MIABE 2026">
   <img src="https://img.shields.io/badge/Blockchain-Polygon-blue" alt="Polygon">
   <img src="https://img.shields.io/badge/Status-En%20ligne-brightgreen" alt="En ligne">
+  <img src="https://img.shields.io/badge/PWA-Installable-blueviolet" alt="PWA">
   <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
 </p>
 
 <p align="center">
   <strong>Plateforme de transfert d'argent blockchain pour la diaspora africaine vers le Benin</strong><br/>
-  Frais reduits a 0.8% | Reception en moins de 30 minutes | PWA installable
+  Frais reduits a 0.8% | Reception en moins de 30 minutes | PWA installable sur telephone
 </p>
 
 ---
 
-## Liens de deploiement (Production)
+## Tous les liens du projet
 
-| Service | URL | Status |
-|---------|-----|--------|
-| **Landing Page** | [deploy-landing-xwspoghs.devinapps.com](https://deploy-landing-xwspoghs.devinapps.com) | En ligne |
-| **Application PWA** | [deploy-pwa-jidihhbo.devinapps.com](https://deploy-pwa-jidihhbo.devinapps.com) | En ligne |
-| **Backend API** | [0c643afbf900-tunnel-yamugwtu.devinapps.com](https://user:d10b00d279fa413f36617173530f37dd@0c643afbf900-tunnel-yamugwtu.devinapps.com/api/health) | En ligne |
-| **Presentation Jury** | [presentation-yxgdjfmm.devinapps.com](https://presentation-yxgdjfmm.devinapps.com) | En ligne |
-| **Base de donnees** | Neon.tech PostgreSQL | Connectee |
-| **Repo GitHub** | [github.com/jauressciti-design/ss](https://github.com/jauressciti-design/ss) | Actif |
-| **PR principale** | [Pull Request #2](https://github.com/jauressciti-design/ss/pull/2) | Ouverte |
+### Deploiements principaux (Vercel - Production permanente)
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Landing Page** | [ss-tan-two.vercel.app](https://ss-tan-two.vercel.app) | Page d'accueil avec presentation, tarifs, FAQ, mockups iPhone |
+| **Application PWA** | [ss-tan-two.vercel.app/app.html](https://ss-tan-two.vercel.app/app.html) | App complete avec connexion OTP, 2 portails |
+
+### Deploiements Devin Apps (Backup)
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Landing Page** | [deploy-landing-xwspoghs.devinapps.com](https://deploy-landing-xwspoghs.devinapps.com) | Landing page de backup |
+| **Application PWA** | [deploy-pwa-jidihhbo.devinapps.com](https://deploy-pwa-jidihhbo.devinapps.com) | PWA de backup |
+| **Backend API** | [0c643afbf900-tunnel-yamugwtu.devinapps.com](https://user:d10b00d279fa413f36617173530f37dd@0c643afbf900-tunnel-yamugwtu.devinapps.com/api/health) | API REST Node.js + PostgreSQL |
+| **Presentation Jury** | [presentation-yxgdjfmm.devinapps.com](https://presentation-yxgdjfmm.devinapps.com) | 12 slides pour le jury |
+
+### Code source et documentation
+
+| Ressource | URL |
+|-----------|-----|
+| **Repo GitHub** | [github.com/jauressciti-design/ss](https://github.com/jauressciti-design/ss) |
+| **PR #2 - Deploiement complet** | [Pull Request #2](https://github.com/jauressciti-design/ss/pull/2) |
+| **PR #3 - Nav fix + mockups** | [Pull Request #3](https://github.com/jauressciti-design/ss/pull/3) |
+| **Dossier jury (Markdown)** | [PRESENTATION_JURY.md](./PRESENTATION_JURY.md) |
+| **Documentation API** | [API_FRONTEND_DOCS.md](./API_FRONTEND_DOCS.md) |
+
+### Base de donnees
+
+| Service | Plateforme | Details |
+|---------|-----------|---------|
+| **PostgreSQL** | Neon.tech (cloud gratuit) | Base de donnees production, toutes tables creees et synchronisees |
 
 ---
 
-## Description
+## Ce qui a ete fait (resume complet)
+
+### 1. Frontend - Landing Page
+- Page d'accueil responsive avec hero section, animations GSAP + ScrollTrigger
+- Calculateur de frais en temps reel (USD/EUR/GBP/CAD vers XOF)
+- Section tarifs avec comparaison Western Union / MoneyGram
+- FAQ interactive avec accordeons
+- Section "Comment ca marche" en 3 etapes
+- Section securite et blockchain
+- Mockups iPhone avec les vraies captures d'ecran de l'app (9 screenshots)
+- Footer avec liens et informations equipe
+
+### 2. Frontend - Application PWA
+- **Ecran de connexion OTP** : numero de telephone +229, nom complet, code OTP a 6 chiffres (code demo: **123456**)
+- **Selecteur de portail** : Diaspora (envoyer) ou Benin (recevoir)
+- **Portail Diaspora** :
+  - Accueil avec solde, quick actions, derniers transferts
+  - Envoi de transfert avec calcul automatique des frais et conversion XOF
+  - Historique des transferts
+  - Profil utilisateur avec parametres
+- **Portail Benin** :
+  - Accueil avec solde disponible et derniers transferts recus
+  - Reception de transferts par telephone ou ID
+  - Paiement de factures (SBEE, SONEB, MTN, Canal+)
+  - Profil utilisateur
+- **Navigation amélioree** : barre de navigation visible, icones larges, fond colore sur l'onglet actif, safe-area pour iOS
+- **PWA installable** sur telephone :
+  - Manifeste PWA (`manifest.json`) avec icones PNG 192x192 et 512x512
+  - Service Worker (`sw.js`) pour le mode hors ligne
+  - Banniere d'installation en bas de page
+  - Meta tags Apple (apple-mobile-web-app-capable, viewport-fit=cover)
+- **Design** : mobile-first, dark mode login, animations fluides, Lucide Icons
+
+### 3. Backend API
+- Serveur **Node.js + Express.js** avec 7 endpoints REST
+- **PostgreSQL** sur Neon.tech (gratuit, cloud) avec Prisma ORM
+- **Authentification OTP** cryptographique (plus de code en dur)
+- **JWT** pour la gestion de session
+- **CORS** configure pour autoriser tous les frontends
+- **Health check** et taux de change en temps reel
+
+### 4. Blockchain (Smart Contracts)
+- Contrat **DiasporaTransfer.sol** en Solidity pour les transferts
+- Contrat **MockUSDC.sol** pour simuler le stablecoin
+- Configuration **Hardhat** pour Polygon Amoy Testnet
+- Scripts de deploiement et de test
+
+### 5. Presentation Jury
+- **12 slides interactives** (HTML) couvrant :
+  1. Page de titre
+  2. Le probleme (frais 7-15%, delais 1-5 jours)
+  3. Notre solution (blockchain Polygon, 0.8%)
+  4. Fonctionnalites cles
+  5. Architecture technique
+  6. Demo en direct (liens vers l'app)
+  7. Comparaison concurrents
+  8. Modele economique
+  9. Impact ODD (4 objectifs)
+  10. Roadmap (4 phases)
+  11. Securite et conformite
+  12. Conclusion et appel a l'action
+- **Dossier ecrit** (PRESENTATION_JURY.md) : 10 sections detaillees
+
+### 6. Deploiements
+- **Vercel** : Landing page + PWA sur [ss-tan-two.vercel.app](https://ss-tan-two.vercel.app) avec auto-deploy a chaque push GitHub
+- **Devin Apps** : Landing, PWA, Backend API, Presentation (4 services separes)
+- **Neon.tech** : Base de donnees PostgreSQL en cloud
+- **GitHub** : Code source sur [jauressciti-design/ss](https://github.com/jauressciti-design/ss)
+
+### 7. Mockups iPhone (Landing Page)
+- 9 captures d'ecran reelles de l'app en format iPhone (375x812 @2x) :
+  - `diaspora-home.png` - Accueil Diaspora
+  - `diaspora-transfer.png` - Ecran d'envoi
+  - `diaspora-summary.png` - Historique
+  - `diaspora-profile.png` - Profil
+  - `diaspora-sent.png` - Confirmation
+  - `benin-home.png` - Accueil Benin
+  - `benin-receive.png` - Reception
+  - `benin-bills.png` - Factures
+  - `benin-withdraw.png` - Retrait
+
+### 8. Documentation
+- `README.md` : Ce fichier, avec tous les liens et instructions
+- `PRESENTATION_JURY.md` : Dossier complet pour le jury
+- `API_FRONTEND_DOCS.md` : Documentation de l'API frontend
+- `.env.example` : Variables d'environnement necessaires
+- `render.yaml` : Configuration Render (Blueprint)
+- `vercel.json` : Configuration Vercel avec headers de securite
+- `Dockerfile` : Image Docker pour le backend
+
+---
+
+## Description du projet
 
 **DiasporaConnect** est une plateforme innovante de transfert de fonds internationaux construite sur la blockchain Polygon, permettant a la diaspora africaine d'envoyer de l'argent vers le Benin avec des frais reduits a **0.8%** et une reception en Mobile Money (MTN MoMo, Moov Money) en moins de 30 minutes.
 
@@ -36,21 +151,22 @@ Le projet est developpe par l'equipe **LumniX** dans le cadre du **MIABE Hackath
 
 ---
 
-## Fonctionnalites Principales
+## Fonctionnalites detaillees
 
 ### Portail Diaspora (Expediteurs)
-- **Authentification sans mot de passe** par OTP SMS cryptographique
-- **Calcul automatique des frais** et conversion en temps reel (USD, EUR, GBP, CAD vers XOF)
-- **Transfert securise** via smart contract Polygon
-- **Suivi en temps reel** avec ID de transaction unique
-- **Historique des transferts** avec details complets
+- Authentification sans mot de passe par OTP SMS cryptographique
+- Calcul automatique des frais et conversion en temps reel (USD, EUR, GBP, CAD vers XOF)
+- Transfert securise via smart contract Polygon
+- Suivi en temps reel avec ID de transaction unique
+- Historique des transferts avec details complets
+- Profil utilisateur avec parametres de securite
 
 ### Portail Benin (Beneficiaires)
-- **Recherche de transfert** par telephone ou ID de transaction
-- **Retrait en Mobile Money** (MTN MoMo / Moov Money)
-- **Paiement de factures** : SBEE (electricite), SONEB (eau), MTN (mobile), Canal+ (TV)
-- **Paiement marchand** par QR Code sans frais
-- **Solde disponible** et historique des operations
+- Recherche de transfert par telephone ou ID de transaction
+- Retrait en Mobile Money (MTN MoMo / Moov Money)
+- Paiement de factures : SBEE (electricite), SONEB (eau), MTN (mobile), Canal+ (TV)
+- Paiement marchand par QR Code sans frais
+- Solde disponible et historique des operations
 
 ### Points Forts
 - **Frais quasi nuls** : 0.8% contre 7-15% chez Western Union / MoneyGram
@@ -71,6 +187,8 @@ Le projet est developpe par l'equipe **LumniX** dans le cadre du **MIABE Hackath
 | GSAP + ScrollTrigger | Animations landing page |
 | Service Worker | Mode hors ligne PWA |
 | Design responsive | Mobile-first |
+| CSS Custom Properties | Theming (variables CSS) |
+| Safe Area Insets | Support iPhone X+ (encoche) |
 
 ### Backend
 | Technologie | Usage |
@@ -80,6 +198,7 @@ Le projet est developpe par l'equipe **LumniX** dans le cadre du **MIABE Hackath
 | PostgreSQL (Neon.tech) | Base de donnees production |
 | JSON Web Tokens (JWT) | Authentification |
 | crypto (Node.js) | Generation OTP securise |
+| CORS | Securite cross-origin |
 
 ### Blockchain
 | Technologie | Usage |
@@ -90,13 +209,15 @@ Le projet est developpe par l'equipe **LumniX** dans le cadre du **MIABE Hackath
 | ethers.js | Interaction blockchain |
 
 ### Infrastructure
-| Service | Plateforme |
-|---------|-----------|
-| Landing Page | Devin Apps (CDN statique) |
-| Application PWA | Devin Apps (CDN statique) |
-| Backend API | Devin Apps (tunnel Node.js) |
-| Base de donnees | Neon.tech (PostgreSQL cloud) |
-| Presentation | Devin Apps (CDN statique) |
+| Service | Plateforme | URL |
+|---------|-----------|-----|
+| Landing Page (prod) | Vercel | [ss-tan-two.vercel.app](https://ss-tan-two.vercel.app) |
+| PWA (prod) | Vercel | [ss-tan-two.vercel.app/app.html](https://ss-tan-two.vercel.app/app.html) |
+| Landing Page (backup) | Devin Apps | [deploy-landing-xwspoghs.devinapps.com](https://deploy-landing-xwspoghs.devinapps.com) |
+| PWA (backup) | Devin Apps | [deploy-pwa-jidihhbo.devinapps.com](https://deploy-pwa-jidihhbo.devinapps.com) |
+| Backend API | Devin Apps | [API Health](https://user:d10b00d279fa413f36617173530f37dd@0c643afbf900-tunnel-yamugwtu.devinapps.com/api/health) |
+| Base de donnees | Neon.tech | PostgreSQL cloud |
+| Presentation Jury | Devin Apps | [presentation-yxgdjfmm.devinapps.com](https://presentation-yxgdjfmm.devinapps.com) |
 
 ---
 
@@ -147,13 +268,13 @@ curl -X POST https://user:d10b00d279fa413f36617173530f37dd@0c643afbf900-tunnel-y
 ```
 ss/
 ├── index.html                  # Landing page principale
-├── styles.css                  # Styles CSS landing page
-├── script.js                   # Logique JavaScript landing page
-├── app.html                    # Application PWA (2 portails)
-├── app-styles.css              # Styles CSS application
-├── app-script.js               # Logique JavaScript application
-├── manifest.json               # Manifeste PWA
-├── sw.js                       # Service Worker PWA
+├── styles.css                  # Styles CSS landing page (animations, hero, responsive)
+├── script.js                   # Logique JavaScript landing page (GSAP, FAQ, calculateur)
+├── app.html                    # Application PWA (connexion OTP + 2 portails)
+├── app-styles.css              # Styles CSS application (dark login, nav, portails)
+├── app-script.js               # Logique JavaScript application (auth OTP, transferts)
+├── manifest.json               # Manifeste PWA (icones, theme, start_url)
+├── sw.js                       # Service Worker PWA (cache v2, mode hors ligne)
 ├── presentation.html           # Slides de presentation jury (12 slides)
 ├── PRESENTATION_JURY.md        # Dossier ecrit pour le jury
 ├── API_FRONTEND_DOCS.md        # Documentation API frontend
@@ -161,22 +282,22 @@ ss/
 │
 ├── backend/                    # Serveur Node.js
 │   ├── src/
-│   │   ├── index.js            # Point d'entree serveur
-│   │   ├── prismaClient.js     # Client Prisma
+│   │   ├── index.js            # Point d'entree serveur (Express, CORS, routes)
+│   │   ├── prismaClient.js     # Client Prisma (connexion PostgreSQL)
 │   │   ├── middleware/
-│   │   │   └── auth.js         # Middleware JWT
+│   │   │   └── auth.js         # Middleware JWT (verification token)
 │   │   ├── routes/
-│   │   │   ├── auth.js         # Routes inscription/OTP
-│   │   │   ├── transfer.js     # Routes transferts
-│   │   │   ├── withdraw.js     # Routes retraits
-│   │   │   ├── rates.js        # Routes taux de change
+│   │   │   ├── auth.js         # Routes inscription/OTP (crypto)
+│   │   │   ├── transfer.js     # Routes transferts (Polygon)
+│   │   │   ├── withdraw.js     # Routes retraits (Mobile Money)
+│   │   │   ├── rates.js        # Routes taux de change (CoinGecko)
 │   │   │   └── transactions.js # Routes historique
 │   │   └── services/
-│   │       ├── blockchain.js   # Interactions Polygon
+│   │       ├── blockchain.js   # Interactions Polygon (ethers.js)
 │   │       ├── coingecko.js    # API taux de change
-│   │       └── twilio.js       # Envoi SMS OTP
+│   │       └── twilio.js       # Envoi SMS OTP (mock/reel)
 │   ├── prisma/
-│   │   └── schema.prisma       # Schema base de donnees
+│   │   └── schema.prisma       # Schema base de donnees (User, Transfer, OTP)
 │   ├── Dockerfile              # Image Docker backend
 │   ├── package.json            # Dependances Node.js
 │   └── .env.example            # Variables d'environnement exemple
@@ -195,18 +316,23 @@ ss/
 │   └── hardhat.config.js           # Configuration Hardhat
 │
 ├── assets/                     # Ressources statiques
-│   ├── favicon.svg             # Icone du site
+│   ├── favicon.svg             # Icone du site (SVG)
 │   ├── icon-192.png            # Icone PWA 192x192
 │   ├── icon-512.png            # Icone PWA 512x512
-│   └── screens/                # Captures d'ecran
-│       ├── diaspora-home.png
-│       ├── diaspora-transfer.png
-│       ├── diaspora-summary.png
-│       └── benin-home.png
+│   └── screens/                # Captures d'ecran pour les mockups iPhone
+│       ├── diaspora-home.png       # Accueil portail Diaspora
+│       ├── diaspora-transfer.png   # Ecran d'envoi de transfert
+│       ├── diaspora-summary.png    # Historique des transferts
+│       ├── diaspora-profile.png    # Profil utilisateur Diaspora
+│       ├── diaspora-sent.png       # Confirmation d'envoi
+│       ├── benin-home.png          # Accueil portail Benin
+│       ├── benin-receive.png       # Ecran de reception
+│       ├── benin-bills.png         # Paiement de factures
+│       └── benin-withdraw.png      # Ecran de retrait
 │
-├── render.yaml                 # Configuration Render (Blueprint)
+├── render.yaml                 # Configuration Render (Blueprint auto-deploy)
 ├── Dockerfile                  # Docker pour le backend
-└── vercel.json                 # Configuration Vercel
+└── vercel.json                 # Configuration Vercel (headers securite)
 ```
 
 ---
@@ -292,7 +418,7 @@ TWILIO_PHONE_NUMBER=""
 Le dossier de presentation complet est disponible en deux formats :
 
 1. **Slides interactives (HTML)** : [presentation-yxgdjfmm.devinapps.com](https://presentation-yxgdjfmm.devinapps.com)
-   - 12 slides couvrant : probleme, solution, fonctionnalites, architecture, demo, comparaison, business model, ODD, roadmap
+   - 12 slides : probleme, solution, fonctionnalites, architecture, demo, comparaison, business model, ODD, roadmap, securite, conclusion
    - Navigation par scroll
    - Liens directs vers les demos en ligne
 
@@ -313,6 +439,7 @@ Le dossier de presentation complet est disponible en deux formats :
 | **Securite** | Standard | Standard | **Blockchain AES-256** |
 | **Hors ligne** | Non | Non | **Oui (PWA)** |
 | **Installation** | App Store | App Store | **Aucune (PWA)** |
+| **Transparence** | Opaque | Opaque | **100% transparent** |
 
 ---
 
@@ -352,6 +479,33 @@ DiasporaConnect contribue a 4 Objectifs de Developpement Durable :
 
 ---
 
+## Comment tester l'application
+
+### Tester la PWA (connexion + portails)
+1. Aller sur [ss-tan-two.vercel.app/app.html](https://ss-tan-two.vercel.app/app.html) (ou [deploy-pwa-jidihhbo.devinapps.com](https://deploy-pwa-jidihhbo.devinapps.com))
+2. Entrer un numero de telephone (ex: `97123456`) et un nom
+3. Cliquer "Recevoir le code OTP"
+4. Entrer le code demo : **123456**
+5. Choisir le **Portail Diaspora** (envoyer) ou **Portail Beninois** (recevoir)
+6. Explorer les fonctionnalites de chaque portail
+
+### Installer la PWA sur telephone
+1. Ouvrir le lien PWA sur Chrome mobile
+2. Une banniere "Installer DiasporaConnect" apparait en bas
+3. Cliquer "Installer" pour ajouter l'app a l'ecran d'accueil
+4. L'app s'ouvre comme une app native (plein ecran, pas de barre URL)
+
+### Tester l'API
+```bash
+# Health check
+curl https://user:d10b00d279fa413f36617173530f37dd@0c643afbf900-tunnel-yamugwtu.devinapps.com/api/health
+
+# Taux de change
+curl https://user:d10b00d279fa413f36617173530f37dd@0c643afbf900-tunnel-yamugwtu.devinapps.com/api/rates
+```
+
+---
+
 ## Equipe
 
 Projet developpe par l'equipe **LumniX** pour le **MIABE Hackathon 2026**.
@@ -367,17 +521,22 @@ MIT License
 
 ---
 
-## Liens utiles
+## Recapitulatif de tous les liens
 
 | Ressource | Lien |
 |-----------|------|
-| Landing Page | [deploy-landing-xwspoghs.devinapps.com](https://deploy-landing-xwspoghs.devinapps.com) |
-| Application PWA | [deploy-pwa-jidihhbo.devinapps.com](https://deploy-pwa-jidihhbo.devinapps.com) |
-| Backend API (Health) | [API Health Check](https://user:d10b00d279fa413f36617173530f37dd@0c643afbf900-tunnel-yamugwtu.devinapps.com/api/health) |
-| Presentation Jury | [presentation-yxgdjfmm.devinapps.com](https://presentation-yxgdjfmm.devinapps.com) |
-| Documentation API | [API_FRONTEND_DOCS.md](./API_FRONTEND_DOCS.md) |
-| Doc Blockchain | [DiasporaConnect_Technique_Blockchain.docx](./DiasporaConnect_Technique_Blockchain.docx) |
-| Dossier Jury | [PRESENTATION_JURY.md](./PRESENTATION_JURY.md) |
+| **Landing Page (Vercel)** | [ss-tan-two.vercel.app](https://ss-tan-two.vercel.app) |
+| **PWA (Vercel)** | [ss-tan-two.vercel.app/app.html](https://ss-tan-two.vercel.app/app.html) |
+| **Landing Page (Devin Apps)** | [deploy-landing-xwspoghs.devinapps.com](https://deploy-landing-xwspoghs.devinapps.com) |
+| **PWA (Devin Apps)** | [deploy-pwa-jidihhbo.devinapps.com](https://deploy-pwa-jidihhbo.devinapps.com) |
+| **Backend API (Health)** | [API Health Check](https://user:d10b00d279fa413f36617173530f37dd@0c643afbf900-tunnel-yamugwtu.devinapps.com/api/health) |
+| **Backend API (Rates)** | [API Taux de change](https://user:d10b00d279fa413f36617173530f37dd@0c643afbf900-tunnel-yamugwtu.devinapps.com/api/rates) |
+| **Presentation Jury (Slides)** | [presentation-yxgdjfmm.devinapps.com](https://presentation-yxgdjfmm.devinapps.com) |
+| **Dossier Jury (Markdown)** | [PRESENTATION_JURY.md](./PRESENTATION_JURY.md) |
+| **Documentation API** | [API_FRONTEND_DOCS.md](./API_FRONTEND_DOCS.md) |
+| **Repo GitHub** | [github.com/jauressciti-design/ss](https://github.com/jauressciti-design/ss) |
+| **PR #2** | [Pull Request #2](https://github.com/jauressciti-design/ss/pull/2) |
+| **PR #3** | [Pull Request #3](https://github.com/jauressciti-design/ss/pull/3) |
 
 ---
 

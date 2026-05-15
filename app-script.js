@@ -281,10 +281,127 @@ async function apiGetRates() {
   }
 }
 
+// ===================== LOGIN SCREEN =====================
+let loginPhone = '';
+let loginName = '';
+
+window.loginSendOTP = async function() {
+  const phoneInput = document.getElementById('loginPhone');
+  const nameInput = document.getElementById('loginName');
+  const phone = '+229' + phoneInput.value.replace(/\s/g, '');
+  const name = nameInput.value.trim();
+
+  if (phoneInput.value.replace(/\s/g, '').length < 8) {
+    showToast('Entrez un numero valide (8 chiffres)', 'error');
+    return;
+  }
+  if (!name) {
+    showToast('Entrez votre nom complet', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('loginSendOTP');
+  setLoading(btn, true);
+
+  try {
+    await apiSendOTP(phone, name);
+    loginPhone = phone;
+    loginName = name;
+    document.getElementById('loginPhoneDisplay').textContent = phone;
+    document.getElementById('loginStep1').classList.remove('active');
+    document.getElementById('loginStep2').classList.add('active');
+    if (window.lucide) lucide.createIcons();
+    showToast('Code OTP envoye !', 'success');
+    setTimeout(() => {
+      const firstDigit = document.querySelector('#loginOTPInputs .login-otp-digit');
+      if (firstDigit) firstDigit.focus();
+    }, 300);
+  } catch (e) {
+    showToast(e.message || 'Erreur lors de l\'envoi', 'error');
+  } finally {
+    setLoading(btn, false);
+  }
+};
+
+window.loginVerifyOTP = async function() {
+  const digits = document.querySelectorAll('#loginOTPInputs .login-otp-digit');
+  const otpCode = Array.from(digits).map(d => d.value).join('');
+
+  if (otpCode.length < 6) {
+    showToast('Entrez les 6 chiffres du code', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('loginVerifyOTP');
+  setLoading(btn, true);
+
+  try {
+    transferState.senderName = loginName;
+    const result = await apiVerifyOTP(loginPhone, otpCode);
+    transferState.token = result.token;
+    transferState.senderPhone = loginPhone;
+
+    showToast('Connexion reussie ! Bienvenue ' + loginName, 'success');
+
+    const loginScreen = document.getElementById('loginScreen');
+    loginScreen.classList.add('login-success');
+
+    setTimeout(() => {
+      loginScreen.classList.remove('active-view');
+      loginScreen.classList.remove('login-success');
+      document.getElementById('portalSelector').classList.add('active-view');
+      if (window.lucide) lucide.createIcons();
+    }, 600);
+  } catch (e) {
+    showToast(e.message || 'Code OTP incorrect', 'error');
+    const digits = document.querySelectorAll('#loginOTPInputs .login-otp-digit');
+    digits.forEach(d => { d.value = ''; });
+    digits[0].focus();
+  } finally {
+    setLoading(btn, false);
+  }
+};
+
+window.loginGoBack = function() {
+  document.getElementById('loginStep2').classList.remove('active');
+  document.getElementById('loginStep1').classList.add('active');
+  const digits = document.querySelectorAll('#loginOTPInputs .login-otp-digit');
+  digits.forEach(d => { d.value = ''; });
+  if (window.lucide) lucide.createIcons();
+};
+
+function setupLoginOTPInputs() {
+  const digits = document.querySelectorAll('#loginOTPInputs .login-otp-digit');
+  digits.forEach((input, idx) => {
+    input.addEventListener('input', (e) => {
+      const val = e.target.value.replace(/\D/g, '');
+      e.target.value = val.slice(0, 1);
+      if (val && idx < digits.length - 1) {
+        digits[idx + 1].focus();
+      }
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+        digits[idx - 1].focus();
+      }
+    });
+    input.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const paste = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+      paste.split('').slice(0, 6).forEach((char, i) => {
+        if (digits[i]) digits[i].value = char;
+      });
+      const next = Math.min(paste.length, 5);
+      digits[next].focus();
+    });
+  });
+}
+
 // ===================== INIT =====================
 document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) lucide.createIcons();
   setupOTPInputs();
+  setupLoginOTPInputs();
   updateCalc();
   updateTransferCalc();
   apiGetRates();

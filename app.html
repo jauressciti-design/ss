@@ -24,8 +24,69 @@
 <div id="modalOverlay" class="modal-overlay" onclick="closeModal()"></div>
 <div id="modalContent" class="modal-box"></div>
 
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="loginScreen" class="login-screen active-view">
+  <div class="login-bg"></div>
+  <div class="login-content">
+    <div class="login-logo">
+      <svg width="72" height="72" viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="12" fill="url(#lg2)"/>
+        <path d="M12 14C12 14 16 10 20 10C26 10 28 14 28 18C28 24 20 30 20 30C20 30 12 24 12 18" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <path d="M17 18L20 21L27 14" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="30" cy="12" r="5" fill="#16A34A"/><path d="M28 12H32M30 10V14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        <defs><linearGradient id="lg2" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#F97316"/><stop offset="1" stop-color="#EA580C"/></linearGradient></defs>
+      </svg>
+    </div>
+    <h1 class="login-title">Diaspora<strong>Connect</strong></h1>
+    <p class="login-sub">Connectez-vous pour acceder a votre espace</p>
+
+    <!-- Step 1: Phone number -->
+    <div id="loginStep1" class="login-step active">
+      <div class="login-field">
+        <label for="loginPhone">Numero de telephone</label>
+        <div class="login-input-wrap">
+          <span class="login-prefix">+229</span>
+          <input type="tel" id="loginPhone" placeholder="97 00 00 00" maxlength="11" autocomplete="tel"/>
+        </div>
+      </div>
+      <div class="login-field">
+        <label for="loginName">Votre nom complet</label>
+        <input type="text" id="loginName" placeholder="Ex: Aminata Diallo" class="login-input" autocomplete="name"/>
+      </div>
+      <button class="login-btn" id="loginSendOTP" onclick="loginSendOTP()">
+        <i data-lucide="send"></i> Recevoir le code OTP
+      </button>
+      <p class="login-hint">Un code de verification sera envoye par SMS</p>
+    </div>
+
+    <!-- Step 2: OTP verification -->
+    <div id="loginStep2" class="login-step">
+      <p class="login-otp-info">Code envoye au <strong id="loginPhoneDisplay">+229 97 00 00 00</strong></p>
+      <div class="login-otp-inputs" id="loginOTPInputs">
+        <input type="text" maxlength="1" class="login-otp-digit" data-idx="0" inputmode="numeric"/>
+        <input type="text" maxlength="1" class="login-otp-digit" data-idx="1" inputmode="numeric"/>
+        <input type="text" maxlength="1" class="login-otp-digit" data-idx="2" inputmode="numeric"/>
+        <input type="text" maxlength="1" class="login-otp-digit" data-idx="3" inputmode="numeric"/>
+        <input type="text" maxlength="1" class="login-otp-digit" data-idx="4" inputmode="numeric"/>
+        <input type="text" maxlength="1" class="login-otp-digit" data-idx="5" inputmode="numeric"/>
+      </div>
+      <button class="login-btn" id="loginVerifyOTP" onclick="loginVerifyOTP()">
+        <i data-lucide="shield-check"></i> Verifier et se connecter
+      </button>
+      <button class="login-back-btn" onclick="loginGoBack()">
+        <i data-lucide="arrow-left"></i> Modifier le numero
+      </button>
+      <p class="login-hint">Code de demo : <strong>123456</strong></p>
+    </div>
+
+    <div class="login-footer">
+      <span>LumniX — MIABE 2026</span>
+    </div>
+  </div>
+</div>
+
 <!-- ===== PORTAL SELECTOR ===== -->
-<div id="portalSelector" class="portal-selector active-view">
+<div id="portalSelector" class="portal-selector">
   <div class="ps-bg"></div>
   <div class="ps-content">
     <div class="ps-logo">

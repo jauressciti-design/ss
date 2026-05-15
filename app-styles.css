@@ -224,18 +224,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* =============== BOTTOM NAV =============== */
 .bottom-nav {
   display: flex; align-items: center; justify-content: space-around;
-  height: 64px; background: var(--white);
-  border-top: 1px solid var(--g100);
-  padding: 0 8px; flex-shrink: 0;
+  min-height: 68px; background: var(--white);
+  border-top: 1.5px solid var(--g200);
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)); flex-shrink: 0;
+  box-shadow: 0 -2px 12px rgba(0,0,0,.06);
+  position: relative; z-index: 20;
 }
 .bnav-item {
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
-  padding: 6px 16px; color: var(--g400); font-size: .65rem; font-weight: 600;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 8px 18px; color: var(--g400); font-size: .7rem; font-weight: 600;
   border-radius: 12px; transition: all .2s var(--ease);
 }
-.bnav-item svg { width: 22px; height: 22px; }
-.bnav-item.active { color: var(--orange); }
-.bottom-nav-green .bnav-item.active { color: var(--green); }
+.bnav-item svg { width: 24px; height: 24px; }
+.bnav-item.active { color: var(--orange); background: var(--orange-light); }
+.bottom-nav-green .bnav-item.active { color: var(--green); background: var(--green-light); }
 
 /* Switch portal FAB */
 .switch-portal-fab {
@@ -732,7 +734,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 @media (min-width: 500px) {
   body { background: linear-gradient(135deg, #FFF7ED 0%, #F0FDF4 100%); }
   .app-shell {
-    border-radius: 32px; height: 90vh; max-height: 800px;
+    border-radius: 32px; height: 92vh; max-height: 860px;
     box-shadow: 0 24px 64px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.04);
   }
   .modal-box { border-radius: 24px; bottom: auto; top: 50%; transform: translate(-50%, -50%); }
